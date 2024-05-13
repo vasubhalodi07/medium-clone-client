@@ -1,0 +1,42 @@
+.blog-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0px;
+}
+
+.blog-add {
+  width: 50%;
+}
+
+#blogForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.blog-title,
+.blog-tag {
+  width: 100%;
+}
+
+.blog-title input,
+select {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid #a9abb6;
+}
+
+.blog-btn {
+  display: flex;
+  gap: 5px;
+}
+
+input[type="submit"] {
+  padding: 5px 10px;
+}
+
+input[type="reset"] {
+  padding: 5px 10px;
+}

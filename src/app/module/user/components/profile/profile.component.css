@@ -1,0 +1,23 @@
+.medium-container {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-div {
+  width: 70%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.left-container {
+  flex: 2;
+}
+
+.right-container {
+  flex: 1.2;
+}
+
+hr {
+  border: 1px solid #d3d3d3;
+}

@@ -1,0 +1,66 @@
+<div class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div>Comments</div>
+      <i (click)="closeModal()" class="fa-solid fa-xmark"></i>
+    </div>
+    <div class="modal-body">
+      <div class="comment-section-input">
+        <div class="profile-section">
+          <div class="image-container">
+            <img src="" alt="" />
+          </div>
+          <div class="user-name">Vasu Bhalodi</div>
+        </div>
+        <textarea
+          cols="35"
+          rows="5"
+          name="message"
+          [(ngModel)]="message"
+        ></textarea>
+        <div>
+          <button (click)="resetData()">Cancel</button>
+          <button (click)="addComment()">Respond</button>
+        </div>
+      </div>
+      <div class="comment-list" *ngFor="let list of listMessage">
+        <div class="user-container">
+          <div class="img-container">
+            <img
+              [src]="
+                list.user.user_pic
+                  ? list.user.user_pic
+                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s'
+              "
+              alt="profile"
+            />
+          </div>
+          <div>
+            <div class="name">
+              {{ list.user.username ? list.user.username : list.user.email }}
+            </div>
+            <div class="date">
+              {{ list.createdAt | date : "MMM d, y, h:mm:ss a" }}
+            </div>
+          </div>
+          <div class="comment-icons" *ngIf="list.user.id == user_id">
+            <i
+              (click)="toggleEdit(list.id)"
+              class="fa-regular fa-pen-to-square"
+            ></i>
+            &nbsp;
+            <i
+              (click)="deleteComment(list.id)"
+              class="fa-regular fa-trash-can"
+            ></i>
+          </div>
+        </div>
+        <div *ngIf="editId !== list.id || !isEditing">{{ list.message }}</div>
+        <div *ngIf="editId === list.id && isEditing">
+          <input type="text" [(ngModel)]="list.message" />
+          <button (click)="updateComment(list)">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

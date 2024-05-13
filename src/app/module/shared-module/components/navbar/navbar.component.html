@@ -1,0 +1,25 @@
+<section>
+  <div class="left">
+    <div class="image-container">
+      <img src="assets/medium-icon.svg" alt="" />
+    </div>
+    <div class="search-input">
+      <input type="text" placeholder="Search" />
+    </div>
+  </div>
+  <div class="right">
+    <div class="create-blog-icons" (click)="navigateAddBlog()">
+      <i class="fa-regular fa-pen-to-square"></i>
+      <div class="icon-write">Write</div>
+    </div>
+    <div class="profile-image-container" (click)="toggleMenu()">
+      <img src="assets/images.jpeg" alt="" />
+      <div class="menu" [ngClass]="{ 'show-menu': isMenuOpen }">
+        <div (click)="navigateProfile()">
+          <i class="fa-regular fa-user"></i>&nbsp;Profile
+        </div>
+        <div (click)="logout()">Logout</div>
+      </div>
+    </div>
+  </div>
+</section>

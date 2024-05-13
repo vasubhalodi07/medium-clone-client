@@ -1,0 +1,86 @@
+<div class="profile-left-container">
+  <div class="user-name">
+    {{ user.username ? user.username : user.email }}
+  </div>
+
+  <hr color="#d3d3d3" />
+  <div class="tab-view">
+    <div class="list-section">
+      <div *ngFor="let item of items" (click)="changeSection(item)">
+        {{ item }}
+      </div>
+    </div>
+  </div>
+  <hr color="#d3d3d3" />
+
+  <ng-container *ngIf="toggle == 0">
+    <div *ngIf="blogLoading">Loading...</div>
+
+    <div *ngIf="blogEmpty">
+      <div class="no-blogs">No Blog Found!</div>
+    </div>
+
+    <div class="user-blogs" *ngFor="let blog of blogs">
+      <div class="user-image-name-flex">
+        <div class="user-image-container">
+          <img
+            [src]="
+              blog.user.user_pic
+                ? blog.user.user_pic
+                : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s'
+            "
+          />
+        </div>
+        <div class="name">
+          {{ blog.user.username ? blog.user.username : blog.user.email }}
+        </div>
+      </div>
+
+      <div class="container" (click)="blogDetailsNavigation(blog.id)">
+        <div>
+          <div class="blog-title">
+            {{ blog.title }}
+          </div>
+          <div class="blog-description">
+            {{ blog.content }}
+          </div>
+        </div>
+        <div>
+          <div class="image-container">
+            <img src="http://localhost:9000/{{ blog.blog_image }}" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="flex">
+        <div class="blog-date">
+          {{ blog.createdAt | date : "dd MMM yyyy, h:mm a" }}
+        </div>
+        <div class="blog-options" *ngIf="blog.user_id == id">
+          <div class="update" (click)="updateNavigation(blog.id)">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </div>
+          <div class="delete" (click)="deleteBlog(blog.id)">
+            <i class="fa-regular fa-trash-can"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="toggle == 1">
+    <div class="about-section" *ngIf="!editEnabled">
+      {{ user.about ? user.about : "Write about yourself" }}
+    </div>
+    <div *ngIf="editEnabled" class="input-group">
+      <textarea rows="10" cols="70" type="text" [(ngModel)]="user.about"></textarea>
+      <div class="flex">
+        <button (click)="saveContent()">Save</button>
+        <button (click)="closeEditMode()">Close</button>
+      </div>
+    </div>
+    <div class="edit-btn" *ngIf="!editEnabled">
+      <button (click)="editEnabledFun()">Edit</button>
+    </div>
+  </ng-container>
+</div>

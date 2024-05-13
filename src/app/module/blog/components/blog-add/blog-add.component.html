@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+
+<div class="blog-container">
+  <div class="blog-add">
+    <form id="blogForm" (submit)="onSubmit()">
+      <div class="blog-title">
+        <input
+          type="text"
+          placeholder="Blog Title"
+          [(ngModel)]="blogTitle"
+          name="blogTitle"
+        />
+      </div>
+      <div class="blog-content">
+        <div class="NgxEditor__Wrapper">
+          <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+          <ngx-editor
+            [editor]="editor"
+            [(ngModel)]="html"
+            name="html"
+            [placeholder]="'Type here...'"
+          ></ngx-editor>
+        </div>
+      </div>
+      <div class="blog-tag">
+        <select name="selectedTags" id="" multiple [(ngModel)]="selectedTags">
+          <option *ngFor="let tag of tags" [value]="tag.id">
+            {{ tag.name }}
+          </option>
+        </select>
+      </div>
+      <div class="blog-image">
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          name="selectedFile"
+        />
+      </div>
+      <div class="blog-btn">
+        <input type="submit" />
+        <input type="reset" />
+      </div>
+    </form>
+  </div>
+</div>

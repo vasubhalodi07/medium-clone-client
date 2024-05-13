@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+
+<app-comment
+  *ngIf="showModal"
+  [blogId]="blogId"
+  [showModal]="showModal"
+  (toggleModal)="toggleModal()"
+></app-comment>
+
+<div class="blog">
+  <div class="blog-detail-container">
+    <div class="blog-title">{{ blog.title }}</div>
+    <div class="blog-profile">
+      <div class="profile-image-container">
+        <img
+          [src]="
+            blog.user.user_pic
+              ? blog.user.user_pic
+              : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s'
+          "
+          alt="profile"
+        />
+      </div>
+      <div class="user-info-container">
+        <div>
+          {{ blog.user.name ? blog.user.name : blog.user.email }}
+          <span class="follow">Follow</span>
+        </div>
+        <div class="blog-date">
+          {{ blog.createdAt | date : "dd MMM yyyy, h:mm a" }}
+        </div>
+      </div>
+    </div>
+    <hr color="#d3d3d3" />
+    <div class="blog-section">
+      <div class="flex">
+        <div><i class="fa-regular fa-heart"></i> 633</div>
+        <div (click)="toggleModal()">
+          <i class="fa-regular fa-comment"></i>
+        </div>
+      </div>
+      <div class="flex" *ngIf="blog.user_id == user_id">
+        <div class="update"><i class="fa-regular fa-pen-to-square"></i></div>
+        <div class="delete"><i class="fa-regular fa-trash-can"></i></div>
+      </div>
+    </div>
+    <hr color="#d3d3d3" />
+    <div class="blog-content">
+      <div class="blog-image">
+        <img
+          src="http://localhost:9000/{{ blog.blog_image }}"
+          alt="blog-image"
+        />
+      </div>
+      <div class="blog-content" [innerHTML]="blog.content"></div>
+    </div>
+    <div class="blog-tags">
+      <ng-container *ngFor="let tag of blog.blogtags">
+        <div>{{ tag.tag.name }}</div>
+      </ng-container>
+    </div>
+  </div>
+</div>

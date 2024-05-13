@@ -1,0 +1,27 @@
+<section>
+  <div class="topics"></div>
+  <div class="follower">
+    <div class="topic-title">Who to follow</div>
+    <div class="follow-container">
+      <ng-container *ngFor="let user of users">
+        <div class="flex-container">
+          <div>
+            <div class="profile-flex">
+              <div class="image-container">
+                <img [src]="user.image" alt="profile" />
+              </div>
+              <div>
+                <div class="user-name">{{ user.name }}</div>
+                <div class="user-content">{{ user.content }}</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="follow-button">Follow</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="more">See more suggestions</div>
+  </div>
+</section>

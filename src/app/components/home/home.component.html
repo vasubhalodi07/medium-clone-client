@@ -1,0 +1,49 @@
+<div class="loading-overlay" *ngIf="isTokenValidLoading">
+  <div class="spinner"></div>
+</div>
+
+<ng-container *ngIf="!isExpire">
+  <app-signin *ngIf="isSignInModalOpen"></app-signin>
+  <section>
+    <div class="home-component">
+      <div class="left">
+        <div class="image-container">
+          <img src="assets/medium-logo.png" alt="" />
+        </div>
+      </div>
+      <div class="right">
+        <div>Our Story</div>
+        <div>Membership</div>
+        <div>Write</div>
+        <div (click)="openSignInModal()">Sign in</div>
+        <div class="started">Get Started</div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div>Stay curious.</div>
+      <div>
+        Discover stories, thinking, and expertise from writers on any topic.
+      </div>
+      <div>Start Reading</div>
+    </div>
+
+    <div class="footer">
+      <div>Help</div>
+      <div>Status</div>
+      <div>About</div>
+      <div>Careers</div>
+      <div>Blog</div>
+      <div>Privacy</div>
+      <div>Text to speech</div>
+      <div>Terms</div>
+    </div>
+  </section>
+</ng-container>
+
+<ng-container *ngIf="isExpire">
+  <div>
+    link has been expired
+    <button (click)="home()">Home</button>
+  </div>
+</ng-container>

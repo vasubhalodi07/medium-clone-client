@@ -1,0 +1,161 @@
+<div class="overlay" [ngClass]="{ open: showModal }">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+
+    <ng-container *ngIf="flagModel == 1">
+      <div class="login-title">Welcome back.</div>
+      <div class="login-options">
+        <div class="option">
+          <i class="fa-brands fa-google"></i>
+          <div class="text">Sign in with Google</div>
+        </div>
+        <div class="option">
+          <i class="fa-brands fa-facebook"></i>
+          <div class="text">Sign in with Facebook</div>
+        </div>
+        <!-- <div class="option">
+          <i class="fa-brands fa-apple"></i>
+          <div class="text">Sign in with Apple</div>
+        </div>
+        <div class="option">
+          <i class="fa-brands fa-x-twitter"></i>
+          <div class="text">Sign in with X</div>
+        </div> -->
+        <div class="option">
+          <i class="fa-regular fa-envelope"></i>
+          <div class="text" (click)="changeflagModel(2)">
+            Sign in with Email
+          </div>
+        </div>
+      </div>
+
+      <div class="login-content">
+        <div>
+          No Account?
+          <span class="create-account" (click)="changeflagModel(4)"
+            >Create one</span
+          >
+        </div>
+        <div>Forgot email or trouble signing in? <span>Get help</span></div>
+        <div>
+          Click "Sign In" to agree to Medium's
+          <span>Terms of Services</span> and acknowledge that Medium's
+          <span>Privacy Policy</span> applies to you.
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="flagModel == 2">
+      <div class="login-email">
+        <div class="login-form-width">
+          <div class="sign-email-title">Sign in with email</div>
+          <div class="sign-email-description">
+            Enter the email address associated with your account, and we send a
+            magic link to your inbox.
+          </div>
+
+          <div class="input-group">
+            <div class="email-title">Your email</div>
+            <div class="email-input">
+              <input type="text" [(ngModel)]="email" />
+            </div>
+          </div>
+
+          <div class="login-button">
+            <button (click)="continoue()" [disabled]="sendMailLoading">
+              {{ sendMailLoading ? "Mail Send..." : "Continue" }}
+            </button>
+          </div>
+
+          <div class="back-option" (click)="changeflagModel(1)">
+            <i class="fa-solid fa-chevron-left"></i> All sign in options
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="flagModel == 3">
+      <div class="login-email">
+        <div class="login-form-width">
+          <div class="sign-email-title">Check your inbox.</div>
+          <div class="email-info">
+            <div>Click the link we send to</div>
+            <div>{{ email }} to sign in</div>
+          </div>
+
+          <div class="send-email-button">
+            <button (click)="closeModal()">OK</button>
+          </div>
+
+          <div class="more-option">
+            Can't use a magic link for some reason? We can
+            <span>send you a code instead.</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="flagModel == 4">
+      <div class="login-title">Join Medium.</div>
+      <div class="login-options">
+        <div class="option">
+          <i class="fa-brands fa-google"></i>
+          <div class="text">Sign up with Google</div>
+        </div>
+        <div class="option">
+          <i class="fa-brands fa-facebook"></i>
+          <div class="text">Sign up with Facebook</div>
+        </div>
+        <div class="option">
+          <i class="fa-regular fa-envelope"></i>
+          <div class="text" (click)="changeflagModel(5)">
+            Sign up with Email
+          </div>
+        </div>
+      </div>
+
+      <div class="login-content">
+        <div>
+          Already have an account?
+          <span class="create-account" (click)="changeflagModel(1)"
+            >Sign in</span
+          >
+        </div>
+        <div>
+          Click "Sign In" to agree to Medium's
+          <span>Terms of Services</span> and acknowledge that Medium's
+          <span>Privacy Policy</span> applies to you.
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- register via email -->
+    <ng-container *ngIf="flagModel == 5">
+      <div class="login-email">
+        <div class="login-form-width">
+          <div class="sign-email-title">Sign up with email</div>
+          <div class="sign-email-description">
+            Enter the email address to create your account
+          </div>
+
+          <div class="input-group">
+            <div class="email-title">Your email</div>
+            <div class="email-input">
+              <input type="text" [(ngModel)]="email" />
+            </div>
+          </div>
+
+          <div class="login-button">
+            <button (click)="sendMail()" [disabled]="sendMailLoading">
+              {{ sendMailLoading ? "Sending Mail" : "Continue" }}
+            </button>
+          </div>
+
+          <div class="back-option" (click)="changeflagModel(4)">
+            <i class="fa-solid fa-chevron-left"></i> All sign in options
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
