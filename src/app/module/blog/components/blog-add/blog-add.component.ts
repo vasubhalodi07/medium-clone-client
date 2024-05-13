@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TagApiService } from '../../../../core/services/tag-api.service';
 import { Editor } from 'ngx-editor';
 import { BlogApiService } from '../../../../core/services/blog-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-add',
@@ -18,7 +19,8 @@ export class BlogAddComponent implements OnInit, OnDestroy {
 
   constructor(
     private tagApiService: TagApiService,
-    private blogApiService: BlogApiService
+    private blogApiService: BlogApiService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -59,10 +61,15 @@ export class BlogAddComponent implements OnInit, OnDestroy {
     this.blogApiService.addBlog(formData).subscribe({
       next: (data: any) => {
         console.log(data);
+        this.router.navigate(['/dashboard']);
       },
       error: (err: any) => {
         console.log(err);
       },
     });
+  }
+
+  backNavigate() {
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -17,10 +17,13 @@ export class LeftComponent implements OnInit {
   blogEmpty: boolean = false;
 
   user: any;
-
   id: any;
-
   editEnabled: boolean = false;
+
+  blogId: any;
+  blogDeleteLoading: boolean = false;
+
+  showConfirmation: boolean = false;
 
   constructor(
     private blogApiService: BlogApiService,
@@ -73,35 +76,7 @@ export class LeftComponent implements OnInit {
     });
   }
 
-  editEnabledFun() {
-    this.editEnabled = true;
-  }
-  closeEditMode() {
-    this.editEnabled = false;
-  }
-  saveContent() {
-    console.log(this.user.about);
-    if (this.user.about != '') {
-      let body = {
-        about: this.user.about,
-      }
-
-      this.userApiService
-        .updateUserDetails(this.id, body)
-        .subscribe({
-          next: (data: any) => {
-            console.log(data);
-            this.fetchUserById(this.id);
-          },
-          error: (err) => {
-            console.log(err);
-          },
-        });
-      this.editEnabled = false;
-      this.fetchUserById(this.id);
-    }
-  }
-
+  // toggle section
   changeSection(item: string) {
     if (item === 'Home') {
       this.toggle = 0;
@@ -111,22 +86,60 @@ export class LeftComponent implements OnInit {
     }
   }
 
+  // about section
+  editEnabledFun() {
+    this.editEnabled = true;
+  }
+  closeEditMode() {
+    this.editEnabled = false;
+  }
+  saveContent() {
+    if (this.user.about != '') {
+      let body = {
+        about: this.user.about,
+      };
+
+      this.userApiService.updateUserDetails(this.id, body).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.fetchUserById(this.id);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+      this.editEnabled = false;
+      this.fetchUserById(this.id);
+    }
+  }
+
   blogDetailsNavigation(id: any) {
     this.router.navigate(['/blog/fetch/' + id]);
   }
 
   deleteBlog(id: any) {
     console.log(id);
+    this.blogId = id;
+    this.showConfirmation = true;
+  }
 
-    this.blogApiService.deleteBlog(id).subscribe({
+  confirmDelete() {
+    this.blogDeleteLoading = true;
+    this.blogApiService.deleteBlog(this.blogId).subscribe({
       next: (data: any) => {
-        console.log(data);
+        this.blogDeleteLoading = false;
         this.fetchBlogByUserId(this.id);
+        this.showConfirmation = false;
       },
       error: (err) => {
+        this.blogDeleteLoading = false;
         console.log(err);
       },
     });
+  }
+
+  cancelDelete() {
+    this.showConfirmation = false;
   }
 
   updateNavigation(id: any) {

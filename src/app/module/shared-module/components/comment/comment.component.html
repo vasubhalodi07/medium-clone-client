@@ -4,13 +4,25 @@
       <div>Comments</div>
       <i (click)="closeModal()" class="fa-solid fa-xmark"></i>
     </div>
-    <div class="modal-body">
+
+    <div *ngIf="loadingComment">Loading...</div>
+
+    <div class="modal-body" *ngIf="!loadingComment">
       <div class="comment-section-input">
         <div class="profile-section">
           <div class="image-container">
-            <img src="" alt="" />
+            <img
+              [src]="
+                profile.user_pic
+                  ? profile.user_pic
+                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s'
+              "
+              alt="profile"
+            />
           </div>
-          <div class="user-name">Vasu Bhalodi</div>
+          <div class="user-name">
+            {{ profile.username ? profile.username : profile.email }}
+          </div>
         </div>
         <textarea
           cols="35"
@@ -18,7 +30,7 @@
           name="message"
           [(ngModel)]="message"
         ></textarea>
-        <div>
+        <div class="comment-btn">
           <button (click)="resetData()">Cancel</button>
           <button (click)="addComment()">Respond</button>
         </div>

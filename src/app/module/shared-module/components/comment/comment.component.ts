@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommentApiService } from '../../../../core/services/comment-api.service';
+import { UserApiService } from '../../../../core/services/user-api.service';
 
 @Component({
   selector: 'app-comment',
@@ -12,6 +13,9 @@ export class CommentComponent implements OnInit {
   editId: any = null;
 
   user_id: any;
+  profile: any;
+
+  loadingComment: boolean = false;
 
   @Input() blogId: any;
   @Input() showModal: boolean | undefined;
@@ -19,20 +23,38 @@ export class CommentComponent implements OnInit {
 
   isEditing: boolean = false;
 
-  constructor(private commentApiService: CommentApiService) {}
+  constructor(
+    private commentApiService: CommentApiService,
+    private userApiService: UserApiService
+  ) {}
 
   ngOnInit(): void {
-    let token = localStorage.getItem('id');
-    this.user_id = token;
-
+    let id = localStorage.getItem('id');
+    this.user_id = id;
     this.fetchCommentByBlogId(this.blogId);
+    this.fetchUserById(id);
   }
 
   fetchCommentByBlogId(blogId: string) {
+    this.loadingComment = true;
     this.commentApiService.fetchComment(blogId).subscribe({
       next: (data: any) => {
         console.log(data);
+        this.loadingComment = false;
         this.listMessage = data.data;
+      },
+      error: (err) => {
+        this.loadingComment = false;
+        console.log(err);
+      },
+    });
+  }
+
+  fetchUserById(id: any) {
+    this.userApiService.fetchUserById(id).subscribe({
+      next: (data: any) => {
+        this.profile = data.data;
+        console.log(data);
       },
       error: (err) => {
         console.log(err);

@@ -1,19 +1,32 @@
+<app-profile-edit
+  [showModel]="showModel"
+  [editBlogLoading]="editBlogLoading"
+  [profile]="profile"
+  (edit)="edit($event)"
+  (cancel)="cancelEdit()"
+>
+</app-profile-edit>
+
 <div class="profile-right-container">
   <div class="profile-pic">
     <img
-      src="https://static.vecteezy.com/system/resources/thumbnails/025/067/762/small_2x/4k-beautiful-colorful-abstract-wallpaper-photo.jpg"
-      alt="images"
+      [src]="
+        profile.user_pic
+          ? profile.user_pic
+          : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s'
+      "
     />
   </div>
-  <div class="user-name">Vasu Bhalodi</div>
-  <div class="followers">13 Followers</div>
+  <div class="user-name">
+    {{ profile.username ? profile.username : profile.email }}
+  </div>
+  <div class="followers">{{ getCountFollowers() }} Followers</div>
 
   <div class="bio">
-    React JS | Redux Toolkit | React Redux | Flutter | Express | DBMS | MySQL |
-    MongoDB | Data Structure
+    {{ profile.bio ? profile.bio : "" }}
   </div>
 
-  <div class="edit-profile-link">Edit profile</div>
+  <div class="edit-profile-link" (click)="editProfile()">Edit profile</div>
 
   <div class="following-title">Following</div>
   <div class="list-following">
@@ -30,12 +43,12 @@
         </div>
         <div>
           <div class="name">
-            {{ user.username ? user.username : user.email }}
+            {{ user.user.username ? user.user.username : user.user.email }}
           </div>
         </div>
       </div>
     </ng-container>
   </div>
 
-  <div class="option-user-following">See all (24)</div>
+  <div class="option-user-following">See all</div>
 </div>

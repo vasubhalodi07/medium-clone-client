@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TagApiService } from '../../../../core/services/tag-api.service';
 import { Editor } from 'ngx-editor';
 import { BlogApiService } from '../../../../core/services/blog-api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-update',
@@ -21,7 +21,8 @@ export class BlogUpdateComponent implements OnInit, OnDestroy {
   constructor(
     private tagApiService: TagApiService,
     private blogApiService: BlogApiService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -81,10 +82,15 @@ export class BlogUpdateComponent implements OnInit, OnDestroy {
     this.blogApiService.updateBlog(this.blogId, formData).subscribe({
       next: (data: any) => {
         console.log(data);
+        this.router.navigate(['/blog/fetch/' + this.blogId]);
       },
       error: (err: any) => {
         console.log(err);
       },
     });
+  }
+
+  backNavigate() {
+    this.router.navigate(['/blog/fetch/' + this.blogId]);
   }
 }

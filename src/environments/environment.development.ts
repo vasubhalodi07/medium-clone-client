@@ -21,4 +21,12 @@ export const environment = {
   addComment: '/comment/add',
   deleteComment: '/comment/delete',
   updateComment: '/comment/update',
+
+  addLike: '/like/add',
+  removeLike: '/like/remove',
+
+  followUser: '/connection/follow',
+  unfollowUser: '/connection/unfollow',
+  fetchFollowing: '/connection/following',
+  fetchFollowers: '/connection/followers',
 };

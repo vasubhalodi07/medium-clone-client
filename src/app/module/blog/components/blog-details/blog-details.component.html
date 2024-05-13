@@ -7,7 +7,18 @@
   (toggleModal)="toggleModal()"
 ></app-comment>
 
-<div class="blog">
+<app-delete-confirmation
+  [confirmationMessage]="'Are you sure you want to delete this blog?'"
+  [showConfirmation]="showConfirmation"
+  [blogDeleteLoading]="blogDeleteLoading"
+  (confirm)="confirmDelete()"
+  (cancel)="cancelDelete()"
+>
+</app-delete-confirmation>
+
+<div *ngIf="loadingBlogDetails">Loading...</div>
+
+<div class="blog" *ngIf="!loadingBlogDetails">
   <div class="blog-detail-container">
     <div class="blog-title">{{ blog.title }}</div>
     <div class="blog-profile">
@@ -24,7 +35,17 @@
       <div class="user-info-container">
         <div>
           {{ blog.user.name ? blog.user.name : blog.user.email }}
-          <span class="follow">Follow</span>
+          <span
+            *ngIf="blog.user_id != user_id && !isFollowing"
+            class="follow"
+            (click)="toggleFollow()"
+            >Follow</span
+          >
+          <span
+            (click)="toggleFollow()"
+            *ngIf="blog.user_id != user_id && isFollowing"
+            >Following</span
+          >
         </div>
         <div class="blog-date">
           {{ blog.createdAt | date : "dd MMM yyyy, h:mm a" }}
@@ -34,14 +55,26 @@
     <hr color="#d3d3d3" />
     <div class="blog-section">
       <div class="flex">
-        <div><i class="fa-regular fa-heart"></i> 633</div>
+        <div class="like" (click)="likeFun()">
+          <ng-container *ngIf="isLiked">
+            <i class="fa-solid fa-heart"></i>
+          </ng-container>
+          <ng-container *ngIf="!isLiked">
+            <i class="fa-regular fa-heart"></i>
+          </ng-container>
+          {{ likesCount }}
+        </div>
         <div (click)="toggleModal()">
           <i class="fa-regular fa-comment"></i>
         </div>
       </div>
       <div class="flex" *ngIf="blog.user_id == user_id">
-        <div class="update"><i class="fa-regular fa-pen-to-square"></i></div>
-        <div class="delete"><i class="fa-regular fa-trash-can"></i></div>
+        <div (click)="updateNavigation(blog.id)" class="update">
+          <i class="fa-regular fa-pen-to-square"></i>
+        </div>
+        <div (click)="deleteModalActive(blog.id)" class="delete">
+          <i class="fa-regular fa-trash-can"></i>
+        </div>
       </div>
     </div>
     <hr color="#d3d3d3" />

@@ -1,0 +1,24 @@
+<div class="confirmation-overlay" *ngIf="showModel">
+  <div class="confirmation-box">
+    <div class="edit">Edit Profile</div>
+    <div class="model-body">
+      <div>
+        <div>
+          <img [src]="profile.user_pic" alt="profile" />
+        </div>
+        <input type="file" />
+      </div>
+      <div>
+        <input type="text" [(ngModel)]="profile.username" />
+      </div>
+      <div>
+        <input type="text" [(ngModel)]="profile.bio" />
+      </div>
+    </div>
+
+    <div class="confirmation-buttons">
+      <button class="cancel-btn" (click)="cancelProfile()">Cancel</button>
+      <button class="delete-btn" (click)="updateProfile()">Update</button>
+    </div>
+  </div>
+</div>

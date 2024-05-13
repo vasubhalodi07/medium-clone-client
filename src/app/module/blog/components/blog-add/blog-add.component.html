@@ -3,6 +3,8 @@
 <div class="blog-container">
   <div class="blog-add">
     <form id="blogForm" (submit)="onSubmit()">
+      <div (click)="backNavigate()"><i class="fa-solid fa-arrow-left"></i></div>
+
       <div class="blog-title">
         <input
           type="text"

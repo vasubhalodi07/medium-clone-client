@@ -17,11 +17,8 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.confirmation-message {
-  margin-bottom: 20px;
-}
-
 .confirmation-buttons {
+  padding-top: 20px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
@@ -31,14 +28,35 @@
   padding: 5px 10px;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .delete-btn {
-  background-color: red;
+  background-color: rgb(87, 87, 184);
   color: white;
 }
 
 .delete-btn:disabled {
   background-color: gray;
   cursor: not-allowed;
+}
+
+.edit {
+  padding: 10px 0px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.model-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.model-body div {
+  width: 100%;
+}
+
+input[type="text"] {
+  padding: 10px;
 }
