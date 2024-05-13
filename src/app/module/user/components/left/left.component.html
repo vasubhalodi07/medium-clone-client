@@ -1,3 +1,11 @@
+<!-- <app-delete-confirmation
+  [confirmationMessage]="'Are you sure you want to delete this blog?'"
+  [showConfirmation]="showConfirmation"
+  (confirm)="deleteBlog()"
+  (cancel)="cancelDeletion()"
+>
+</app-delete-confirmation> -->
+
 <div class="profile-left-container">
   <div class="user-name">
     {{ user.username ? user.username : user.email }}
@@ -73,7 +81,12 @@
       {{ user.about ? user.about : "Write about yourself" }}
     </div>
     <div *ngIf="editEnabled" class="input-group">
-      <textarea rows="10" cols="70" type="text" [(ngModel)]="user.about"></textarea>
+      <textarea
+        rows="10"
+        cols="70"
+        type="text"
+        [(ngModel)]="user.about"
+      ></textarea>
       <div class="flex">
         <button (click)="saveContent()">Save</button>
         <button (click)="closeEditMode()">Close</button>
