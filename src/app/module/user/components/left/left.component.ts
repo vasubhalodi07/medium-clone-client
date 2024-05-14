@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BlogApiService } from '../../../../core/services/blog-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserApiService } from '../../../../core/services/user-api.service';
@@ -12,11 +12,22 @@ export class LeftComponent implements OnInit {
   items: string[] = ['Home', 'About'];
   toggle: number = 0;
 
-  blogs: any;
-  blogLoading: boolean = false;
-  blogEmpty: boolean = false;
+  @Input() blogs: any;
+  @Input() blogLoading: boolean = false;
 
-  user: any;
+  @Input() user: any;
+  @Input() userLoading: boolean = false;
+
+  @Input() following: any;
+  @Input() followingLoading: boolean = false;
+
+  @Input() followers: any;
+  @Input() followersLoading: boolean = false;
+
+  @Input() activeSection: any;
+
+  @Output() navigateProfile = new EventEmitter<void>();
+
   id: any;
   editEnabled: boolean = false;
 
@@ -35,48 +46,12 @@ export class LeftComponent implements OnInit {
   ngOnInit(): void {
     let id = localStorage.getItem('id');
     this.id = id;
-
-    this.activatedRoute.params.subscribe((params) => {
-      let userId = params['id'];
-      if (userId) {
-        this.fetchBlogByUserId(userId);
-        this.fetchUserById(userId);
-      }
-    });
   }
 
-  fetchBlogByUserId(userId: any) {
-    this.blogLoading = true;
-    this.blogApiService.fetchBlogByUserId(userId).subscribe({
-      next: (data: any) => {
-        this.blogLoading = false;
-        this.blogs = data.data;
-        if (this.blogs.length === 0) {
-          this.blogEmpty = true;
-        } else {
-          this.blogEmpty = false;
-        }
-      },
-      error: (err) => {
-        this.blogLoading = false;
-        console.log(err);
-      },
-    });
+  navigateToProfile() {
+    this.navigateProfile.emit();
   }
 
-  fetchUserById(userId: any) {
-    this.userApiService.fetchUserById(userId).subscribe({
-      next: (data: any) => {
-        this.user = data.data;
-        console.log(data.data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
-  // toggle section
   changeSection(item: string) {
     if (item === 'Home') {
       this.toggle = 0;
@@ -86,7 +61,6 @@ export class LeftComponent implements OnInit {
     }
   }
 
-  // about section
   editEnabledFun() {
     this.editEnabled = true;
   }
@@ -102,14 +76,14 @@ export class LeftComponent implements OnInit {
       this.userApiService.updateUserDetails(this.id, body).subscribe({
         next: (data: any) => {
           console.log(data);
-          this.fetchUserById(this.id);
+          // this.fetchUserById(this.id);
         },
         error: (err) => {
           console.log(err);
         },
       });
       this.editEnabled = false;
-      this.fetchUserById(this.id);
+      // this.fetchUserById(this.id);
     }
   }
 
@@ -128,7 +102,7 @@ export class LeftComponent implements OnInit {
     this.blogApiService.deleteBlog(this.blogId).subscribe({
       next: (data: any) => {
         this.blogDeleteLoading = false;
-        this.fetchBlogByUserId(this.id);
+        // this.fetchBlogByUserId(this.id);
         this.showConfirmation = false;
       },
       error: (err) => {
@@ -146,5 +120,11 @@ export class LeftComponent implements OnInit {
     this.router.navigate(['/blog/update/' + id]);
   }
 
-  likeBlog(id: any) {}
+  countFollowers() {
+    return this.followers.length;
+  }
+
+  countFollowing() {
+    return this.following.length;
+  }
 }

@@ -1,59 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { UserApiService } from '../../../../core/services/user-api.service';
-import { ActivatedRoute } from '@angular/router';
-import { FollowApiService } from '../../../../core/services/follow-api.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-right',
   templateUrl: './right.component.html',
   styleUrls: ['./right.component.css'],
 })
-export class RightComponent implements OnInit {
-  users: any;
-  profile: any;
+export class RightComponent {
+  @Input() following: any;
+  @Input() followingLoading: boolean = false;
+
+  @Input() followers: any;
+  @Input() followersLoading: boolean = false;
+
+  @Input() user: any;
+  @Input() userLoading: boolean = false;
+
+  @Output() showSection = new EventEmitter<string>();
 
   showModel: boolean = false;
   editBlogLoading: boolean = false;
 
-  constructor(
-    private userApiService: UserApiService,
-    private activatedRoute: ActivatedRoute,
-    private followApiService: FollowApiService
-  ) {}
-
-  ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params) => {
-      let userId = params['id'];
-      if (userId) {
-        this.fetchUserById(userId);
-        this.fetchFollowedUsersMeth(userId);
-      }
-    });
-  }
-
-  fetchFollowedUsersMeth(user_id: any) {
-    this.followApiService.fetchFollowing(user_id).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.users = data.data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
-
-  fetchUserById(id: any) {
-    this.userApiService.fetchUserById(id).subscribe({
-      next: (data: any) => {
-        this.profile = data.data;
-        console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  constructor(private router: Router) {}
 
   editProfile() {
     this.showModel = true;
@@ -65,11 +33,17 @@ export class RightComponent implements OnInit {
 
   edit(updatedProfile: any) {
     console.log(updatedProfile);
-    console.log(this.profile);
-    console.log('edit blog');
   }
 
   getCountFollowers() {
-    return this.users.length;
+    return this.followers.length;
+  }
+
+  navigateToFollowers() {
+    this.showSection.emit('followers');
+  }
+
+  navigateToFollowing() {
+    this.showSection.emit('following');
   }
 }

@@ -3,11 +3,30 @@
 <div class="medium-container">
   <div class="flex-div">
     <div class="left-container">
-      <app-left></app-left>
+      <app-left
+        [blogs]="blogs"
+        [blogLoading]="blogLoading"
+        [user]="user"
+        [userLoading]="userLoading"
+        [activeSection]="activeSection"
+        [followers]="followers"
+        [following]="following"
+        [followersLoading]="followersLoading"
+        [followingLoading]="followingLoading"
+        (navigateProfile)="navigateToProfile()"
+      ></app-left>
     </div>
     <hr color="gray" />
     <div class="right-container">
-      <app-right></app-right>
+      <app-right
+        [followers]="followers"
+        [followersLoading]="followersLoading"
+        [following]="following"
+        [followingLoading]="followingLoading"
+        [user]="user"
+        [userLoading]="userLoading"
+        (showSection)="showSection($event)"
+      ></app-right>
     </div>
   </div>
 </div>

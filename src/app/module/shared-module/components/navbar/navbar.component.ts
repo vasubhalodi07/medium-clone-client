@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   isMenuOpen: boolean = false;
+  searchQuery: string = '';
 
   constructor(private router: Router) {}
 
@@ -32,5 +33,11 @@ export class NavbarComponent {
   navigateProfile() {
     let id = localStorage.getItem('id');
     this.router.navigate(['/user/' + id]);
+  }
+
+  search() {
+    this.router.navigate(['/dashboard'], {
+      queryParams: { q: this.searchQuery },
+    });
   }
 }

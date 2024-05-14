@@ -3,7 +3,13 @@
 <div class="medium-container">
   <div class="flex-div">
     <div class="left-container">
-      <app-left></app-left>
+      <app-left
+        [blogs]="blogs"
+        [blogsLoading]="blogsLoading"
+        [tags]="tags"
+        [tagsLoading]="tagsLoading"
+        (filterTag)="filterTag($event)"
+      ></app-left>
     </div>
     <!-- <hr color="gray" />
     <div class="right-container">

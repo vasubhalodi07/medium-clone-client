@@ -1,7 +1,7 @@
 <app-profile-edit
   [showModel]="showModel"
   [editBlogLoading]="editBlogLoading"
-  [profile]="profile"
+  [user]="user"
   (edit)="edit($event)"
   (cancel)="cancelEdit()"
 >
@@ -11,26 +11,28 @@
   <div class="profile-pic">
     <img
       [src]="
-        profile.user_pic
-          ? profile.user_pic
+        user.user_pic
+          ? user.user_pic
           : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s'
       "
     />
   </div>
   <div class="user-name">
-    {{ profile.username ? profile.username : profile.email }}
+    {{ user.username ? user.username : user.email }}
   </div>
-  <div class="followers">{{ getCountFollowers() }} Followers</div>
+  <div class="followers" (click)="navigateToFollowers()">
+    {{ getCountFollowers() }} Followers
+  </div>
 
   <div class="bio">
-    {{ profile.bio ? profile.bio : "" }}
+    {{ user.bio ? user.bio : "" }}
   </div>
 
   <div class="edit-profile-link" (click)="editProfile()">Edit profile</div>
 
   <div class="following-title">Following</div>
   <div class="list-following">
-    <ng-container *ngFor="let user of users">
+    <ng-container *ngFor="let user of following">
       <div class="flex-users">
         <div class="user-image-container">
           <img
@@ -50,5 +52,7 @@
     </ng-container>
   </div>
 
-  <div class="option-user-following">See all</div>
+  <div class="option-user-following" (click)="navigateToFollowing()">
+    See all
+  </div>
 </div>

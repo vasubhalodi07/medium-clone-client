@@ -15,8 +15,8 @@ export class BlogApiService {
 
   constructor(private httpClient: HttpClient) {}
 
-  fetchBlogs() {
-    return this.httpClient.get(this.fetchBlogApi);
+  fetchBlogs(search: any) {
+    return this.httpClient.get(`${this.fetchBlogApi}?search=${search}`);
   }
 
   fetchBlogById(id: string) {

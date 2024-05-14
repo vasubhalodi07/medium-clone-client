@@ -4,7 +4,12 @@
       <img src="assets/medium-icon.svg" alt="" />
     </div>
     <div class="search-input">
-      <input type="text" placeholder="Search" />
+      <input
+        type="text"
+        placeholder="Search..."
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="search()"
+      />
     </div>
   </div>
   <div class="right">
@@ -18,9 +23,7 @@
         alt=""
       />
       <div class="menu" [ngClass]="{ 'show-menu': isMenuOpen }">
-        <div (click)="navigateProfile()">
-          <i class="fa-regular fa-user"></i>&nbsp;Profile
-        </div>
+        <div (click)="navigateProfile()">Profile</div>
         <div (click)="logout()">Logout</div>
       </div>
     </div>

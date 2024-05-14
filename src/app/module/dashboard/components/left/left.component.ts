@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { BlogApiService } from '../../../../core/services/blog-api.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,29 +6,24 @@ import { Router } from '@angular/router';
   templateUrl: './left.component.html',
   styleUrl: './left.component.css',
 })
-export class LeftComponent implements OnInit {
-  blogs: any = [];
+export class LeftComponent {
+  @Input() blogs: any;
+  @Input() blogsLoading: boolean = false;
 
-  constructor(private blogApiService: BlogApiService, private router: Router) {}
+  @Input() tags: any;
+  @Input() tagsLoading: boolean = false;
 
-  ngOnInit(): void {
-    this.fetchBlogs();
-  }
+  @Output() filterTag: EventEmitter<string> = new EventEmitter<string>();
 
-  fetchBlogs() {
-    this.blogApiService.fetchBlogs().subscribe({
-      next: (data: any) => {
-        this.blogs = data.data;
-        console.log(data.data);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+  selectedTag: string = '';
+
+  constructor(private router: Router) {}
 
   navigateBlog(id: any) {
-    console.log(id);
     this.router.navigate([`/blog/fetch/${id}`]);
+  }
+
+  filterByTag() {
+    this.filterTag.emit(this.selectedTag);
   }
 }

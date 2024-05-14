@@ -1,4 +1,14 @@
 <div class="card-container">
+  <div class="list-filter">
+    <select name="" id="" [(ngModel)]="selectedTag" (change)="filterByTag()">
+      <option value="" disabled *ngIf="tagsLoading">Loading...</option>
+      <option value="" selected disabled>Select Tag</option>
+      <option *ngFor="let tag of tags" [value]="tag.id">
+        {{ tag.name }}
+      </option>
+    </select>
+  </div>
+
   <div
     class="user-blogs"
     *ngFor="let blog of blogs"

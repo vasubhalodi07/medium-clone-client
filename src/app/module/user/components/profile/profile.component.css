@@ -11,7 +11,7 @@
 }
 
 .left-container {
-  flex: 2;
+  flex: 3;
 }
 
 .right-container {
@@ -19,5 +19,5 @@
 }
 
 hr {
-  border: 1px solid #d3d3d3;
+  border: 0.5px solid #f0eaea;
 }
