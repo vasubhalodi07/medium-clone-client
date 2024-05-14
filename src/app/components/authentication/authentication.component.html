@@ -1,0 +1,10 @@
+<div class="loading-overlay" *ngIf="isTokenValidLoading">
+  <div class="spinner"></div>
+</div>
+
+<ng-container *ngIf="isExpire">
+  <div>
+    link has been expired
+    <button (click)="navigateToHome()">Home</button>
+  </div>
+</ng-container>

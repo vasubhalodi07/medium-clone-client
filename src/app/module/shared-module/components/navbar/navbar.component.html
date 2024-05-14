@@ -1,3 +1,5 @@
+<app-login [loginShowModel]="loginShowModel" (close)="closeModel()"></app-login>
+
 <section>
   <div class="left">
     <div class="image-container">
@@ -12,11 +14,12 @@
       />
     </div>
   </div>
-  <div class="right">
+  <div class="right" *ngIf="token">
     <div class="create-blog-icons" (click)="navigateAddBlog()">
       <i class="fa-regular fa-pen-to-square"></i>
       <div class="icon-write">Write</div>
     </div>
+
     <div class="profile-image-container" (click)="toggleMenu()">
       <img
         src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuQo5Lw-BHj6ts6qC_vAlO1yblef_cVX8F1_sRgoAa6w&s"
@@ -27,5 +30,8 @@
         <div (click)="logout()">Logout</div>
       </div>
     </div>
+  </div>
+  <div class="right" *ngIf="!token">
+    <div (click)="openLoginModel()">Login</div>
   </div>
 </section>

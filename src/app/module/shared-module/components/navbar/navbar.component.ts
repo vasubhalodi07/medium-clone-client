@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,11 +6,22 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   isMenuOpen: boolean = false;
   searchQuery: string = '';
+  token: any;
+
+  loginShowModel: boolean = false;
 
   constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.token = localStorage.getItem('token');
+  }
+
+  closeModel() {
+    this.loginShowModel = false;
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -39,5 +50,10 @@ export class NavbarComponent {
     this.router.navigate(['/dashboard'], {
       queryParams: { q: this.searchQuery },
     });
+  }
+
+  openLoginModel() {
+    console.log('called');
+    this.loginShowModel = true;
   }
 }

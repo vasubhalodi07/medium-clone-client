@@ -5,6 +5,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { FormsModule } from '@angular/forms';
 import { DeleteConfirmationComponent } from './components/delete-confirmation/delete-confirmation.component';
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
     CommentComponent,
     DeleteConfirmationComponent,
     ProfileEditComponent,
+    LoginComponent,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -19,6 +21,7 @@ import { ProfileEditComponent } from './components/profile-edit/profile-edit.com
     CommentComponent,
     DeleteConfirmationComponent,
     ProfileEditComponent,
+    LoginComponent,
   ],
 })
 export class SharedModuleModule {}

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlogDetailsComponent } from './components/blog-details/blog-details.component';
 import { BlogAddComponent } from './components/blog-add/blog-add.component';
 import { BlogUpdateComponent } from './components/blog-update/blog-update.component';
+import { authGuard } from '../../core/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,11 +13,13 @@ const routes: Routes = [
   {
     path: 'add',
     component: BlogAddComponent,
+    canActivate: [authGuard],
   },
   {
     path: 'update/:id',
     component: BlogUpdateComponent,
-  }
+    canActivate: [authGuard],
+  },
 ];
 
 @NgModule({

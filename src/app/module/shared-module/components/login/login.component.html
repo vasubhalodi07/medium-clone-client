@@ -1,6 +1,6 @@
-<div class="overlay" [ngClass]="{ open: showModal }">
+<div class="overlay" *ngIf="loginShowModel">
   <div class="modal-content">
-    <span class="close" (click)="closeModal()">&times;</span>
+    <span class="close" (click)="closeModel()">&times;</span>
 
     <ng-container *ngIf="flagModel == 1">
       <div class="login-title">Welcome back.</div>
@@ -72,7 +72,7 @@
           </div>
 
           <div class="send-email-button">
-            <button (click)="closeModal()">OK</button>
+            <button (click)="closeModel()">OK</button>
           </div>
 
           <div class="more-option">

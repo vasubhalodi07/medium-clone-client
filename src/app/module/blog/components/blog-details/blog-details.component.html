@@ -16,7 +16,11 @@
 >
 </app-delete-confirmation>
 
-<div *ngIf="loadingBlogDetails">Loading...</div>
+<app-login [loginShowModel]="loginShowModel" (close)="closeModel()"></app-login>
+
+<div class="loading-container" *ngIf="loadingBlogDetails">
+  <div class="loading-spinner"></div>
+</div>
 
 <div class="blog" *ngIf="!loadingBlogDetails">
   <div class="blog-detail-container">
@@ -32,19 +36,21 @@
           alt="profile"
         />
       </div>
-      <div class="user-info-container">
+      <div class="user-info-container" (click)="navigateToProfile()">
         <div>
           {{ blog.user.name ? blog.user.name : blog.user.email }}
-          <span
-            *ngIf="blog.user_id != user_id && !isFollowing"
-            class="follow"
-            (click)="toggleFollow()"
-            >Follow</span
-          >
-          <span
-            (click)="toggleFollow()"
-            *ngIf="blog.user_id != user_id && isFollowing"
-            >Following</span
+          <ng-container *ngIf="token">
+            <span
+              *ngIf="blog.user_id != user_id && !isFollowing"
+              class="follow"
+              (click)="toggleFollow()"
+              >Follow</span
+            >
+            <span
+              (click)="toggleFollow()"
+              *ngIf="blog.user_id != user_id && isFollowing"
+              >Following</span
+            ></ng-container
           >
         </div>
         <div class="blog-date">

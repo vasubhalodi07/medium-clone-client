@@ -11,9 +11,10 @@ import { SigninComponent } from './components/signin/signin.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthenticationComponent } from './components/authentication/authentication.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, SigninComponent, NotFoundComponent],
+  declarations: [AppComponent, HomeComponent, SigninComponent, NotFoundComponent, AuthenticationComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent],

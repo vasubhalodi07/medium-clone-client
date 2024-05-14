@@ -3,6 +3,7 @@ import { BlogApiService } from '../../../../core/services/blog-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LikeApiService } from '../../../../core/services/like-api.service';
 import { FollowApiService } from '../../../../core/services/follow-api.service';
+import { LOCATION_INITIALIZED } from '@angular/common';
 
 @Component({
   selector: 'app-blog-details',
@@ -27,6 +28,10 @@ export class BlogDetailsComponent implements OnInit {
   followers: any;
   isFollowing: boolean = false;
 
+  loginShowModel: boolean = false;
+  token: any;
+  userId: any;
+
   constructor(
     private blogApiService: BlogApiService,
     private activatedRoute: ActivatedRoute,
@@ -36,6 +41,9 @@ export class BlogDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    this.token = token;
+
     this.user_id = localStorage.getItem('id');
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     this.blogId = id;
@@ -46,6 +54,9 @@ export class BlogDetailsComponent implements OnInit {
     this.loadingBlogDetails = true;
     this.blogApiService.fetchBlogById(id).subscribe({
       next: (data: any) => {
+        console.log(data);
+        this.userId = data.data.user_id;
+
         this.loadingBlogDetails = false;
         this.blog = data.data;
         this.likesCount = data.count;
@@ -68,6 +79,11 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   toggleModal() {
+    if (!localStorage.getItem('token')) {
+      this.loginShowModel = true;
+      return;
+    }
+
     this.showModal = !this.showModal;
   }
 
@@ -95,6 +111,11 @@ export class BlogDetailsComponent implements OnInit {
   }
 
   likeFun() {
+    if (!localStorage.getItem('token')) {
+      this.loginShowModel = true;
+      return;
+    }
+
     if (this.isLiked) {
       this.likeApiService.removeLike(this.blogId).subscribe({
         next: (data) => {
@@ -171,5 +192,13 @@ export class BlogDetailsComponent implements OnInit {
         console.log(err);
       },
     });
+  }
+
+  closeModel() {
+    this.loginShowModel = false;
+  }
+
+  navigateToProfile() {
+    this.router.navigate([`/user/${this.userId}`]);
   }
 }

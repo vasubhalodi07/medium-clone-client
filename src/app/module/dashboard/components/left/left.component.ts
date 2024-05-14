@@ -17,7 +17,9 @@ export class LeftComponent {
 
   selectedTag: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    console.log(this.blogsLoading);
+  }
 
   navigateBlog(id: any) {
     this.router.navigate([`/blog/fetch/${id}`]);
